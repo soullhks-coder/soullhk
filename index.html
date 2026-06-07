@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="JPG, PNG, WEBP, PDF 파일을 브라우저에서 변환하는 정적 웹 서비스"
+    />
+    <title>Pastel Converter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero-panel" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">File Converter</p>
+          <h1 id="page-title">이미지와 PDF를 가볍게 변환</h1>
+          <p class="intro">
+            JPG, PNG, WEBP, PDF 변환을 브라우저에서 바로 처리합니다.
+          </p>
+        </div>
+
+        <div class="upload-panel" data-drop-zone>
+          <input
+            class="sr-only"
+            id="fileInput"
+            type="file"
+            accept="image/jpeg,image/png,image/webp,application/pdf"
+            multiple
+            data-file-input
+          />
+          <label class="upload-button" for="fileInput">
+            <span class="upload-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img">
+                <path d="M12 15V4m0 0 4 4m-4-4-4 4" />
+                <path d="M5 15v3.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V15" />
+              </svg>
+            </span>
+            <span>파일 업로드</span>
+          </label>
+          <p class="upload-caption" data-drop-caption>JPG, PNG, WEBP, PDF</p>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="파일 변환 작업 영역">
+        <section class="control-panel" aria-label="변환 옵션">
+          <div class="mode-group" role="tablist" aria-label="변환 방식">
+            <button class="mode-button is-active" type="button" data-mode-button data-mode="images-to-pdf">
+              이미지 → PDF
+            </button>
+            <button class="mode-button" type="button" data-mode-button data-mode="pdf-to-images">
+              PDF → 이미지
+            </button>
+            <button class="mode-button" type="button" data-mode-button data-mode="image-format">
+              이미지 포맷
+            </button>
+          </div>
+
+          <div class="option-grid">
+            <label class="option-field" data-format-option>
+              <span>결과 포맷</span>
+              <select data-output-format>
+                <option value="jpg">JPG</option>
+                <option value="png">PNG</option>
+                <option value="webp">WEBP</option>
+              </select>
+            </label>
+
+            <label class="option-field" data-quality-option>
+              <span>품질</span>
+              <input type="range" min="60" max="100" value="92" data-quality-input />
+            </label>
+
+            <label class="option-field" data-scale-option>
+              <span>PDF 해상도</span>
+              <select data-pdf-scale>
+                <option value="1.5">보통</option>
+                <option value="2" selected>선명</option>
+                <option value="3">고해상도</option>
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <div class="work-grid">
+          <article class="panel">
+            <div class="panel-header">
+              <h2>선택한 파일</h2>
+              <span class="status-pill" data-file-count>0개</span>
+            </div>
+            <div class="file-list is-empty" data-file-list>
+              <div class="empty-state">
+                <span class="empty-mark" aria-hidden="true"></span>
+                <p>파일을 선택하거나 끌어다 놓아 주세요</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <h2>변환 결과</h2>
+              <span class="status-pill" data-status>준비됨</span>
+            </div>
+            <div class="result-list is-empty" data-result-list>
+              <div class="processing-layer" data-processing-layer aria-hidden="true">
+                <div class="scan-line"></div>
+                <div class="sparkles">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div class="empty-state">
+                <span class="empty-mark result-mark" aria-hidden="true"></span>
+                <p>변환된 파일이 여기에 표시됩니다</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="tool-bar" aria-label="작업 도구">
+          <button class="secondary-button" type="button" data-reset-button disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 6h18" />
+              <path d="M8 6V4.5A1.5 1.5 0 0 1 9.5 3h5A1.5 1.5 0 0 1 16 4.5V6" />
+              <path d="m19 6-.8 13.1A2 2 0 0 1 16.2 21H7.8a2 2 0 0 1-2-1.9L5 6" />
+            </svg>
+            <span>초기화</span>
+          </button>
+          <button class="primary-button" type="button" data-convert-button disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v3" />
+              <path d="M12 18v3" />
+              <path d="M3 12h3" />
+              <path d="M18 12h3" />
+              <path d="m5.6 5.6 2.1 2.1" />
+              <path d="m16.3 16.3 2.1 2.1" />
+              <path d="m18.4 5.6-2.1 2.1" />
+              <path d="m7.7 16.3-2.1 2.1" />
+            </svg>
+            <span>변환하기</span>
+          </button>
+          <button class="secondary-button" type="button" data-download-all-button disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v12" />
+              <path d="m7 10 5 5 5-5" />
+              <path d="M5 21h14" />
+            </svg>
+            <span>전체 다운로드</span>
+          </button>
+        </div>
+        <p class="error-message" data-message role="status" aria-live="polite" hidden></p>
+      </section>
+    </main>
+
+    <script type="module" src="./assets/js/app.js"></script>
+  </body>
+</html>
